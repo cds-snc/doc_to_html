@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 UPLOAD_FOLDER = "tmp"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-app.static_folder = 'static'
+app.static_folder = "static"
 
 
 custom_styles = open("custom_styles.txt", "r", encoding="utf-8").read()
@@ -45,7 +45,6 @@ def homepage():
     """Render Homepage"""
     lang = request.args.get("lang", "en")
     return render_template(f"index_{lang}.html", lang=lang)
-
 
 
 def cleanup_html_data(html_data):
@@ -251,7 +250,10 @@ def cleanup_html_data(html_data):
     filedata = filedata.replace("\\xab", "&laquo;")
     filedata = filedata.replace("\\xbb", "&raquo;")
     filedata = filedata.replace(">>", ">")
-    filedata = filedata.replace('<div class="par iparys_inherited">', '</main><div class="par iparys_inherited">')
+    filedata = filedata.replace(
+        '<div class="par iparys_inherited">',
+        '</main><div class="par iparys_inherited">',
+    )
     filedata2 = filedata.split("<!--CONTENT STARTS HERE-->")
     filedata2 = filedata2[1]
     filedata3 = filedata2.split("<!-- CONTENT ENDS HERE -->")
@@ -397,7 +399,6 @@ def html_convert():
         uploaded_file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
         uploaded_file.save(uploaded_file_path)
         with open(uploaded_file_path, "rb") as docx_file:
-
             result = mammoth.convert_to_html(docx_file, style_map=custom_styles)
             text = result.value
             with open("tmp/doc.html", "w", encoding="unicode_escape") as html_file:
