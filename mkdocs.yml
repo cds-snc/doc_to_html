@@ -1,0 +1,6 @@
+site_name: Digital Transformation Office - DOC to HTML
+
+site_description: Python web app built with Flask that tries to turn Word documents into the full HTML code for Canada.ca pages.
+
+plugins:
+  - techdocs-core
