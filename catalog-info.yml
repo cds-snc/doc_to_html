@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dto-btn-doc-to-html
+  description: Python web app built with Flask that tries to turn Word documents into the full HTML code for Canada.ca pages.
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: website
+  owner: group:cds-snc/digital-transformation-office
+  lifecycle: experimental
+  domain: dto 
