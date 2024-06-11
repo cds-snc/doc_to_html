@@ -1,4 +1,7 @@
 resource "aws_ecr_repository" "doc_to_hmtl_ecr" {
+  # checkov:skip=CKV_AWS_51:The :latest tag is used in Staging
+  # checkov:skip=CKV_AWS_136: ECR encryption with default KMS key is acceptable
+
   name                 = "doc_to_hmtl_ecr"
   image_tag_mutability = "MUTABLE"
 
