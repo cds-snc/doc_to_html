@@ -16,7 +16,7 @@ resource "aws_ecr_repository" "doc_to_hmtl_ecr" {
 }
 
 resource "aws_ecr_lifecycle_policy" "doc_to_hmtl_expire_untagged" {
-  repository = aws_ecr_repository.api.name
+  repository = aws_ecr_repository.doc_to_hml_ecr.name
   policy = jsonencode({
     "rules" : [
       {
