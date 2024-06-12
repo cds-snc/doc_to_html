@@ -1,0 +1,45 @@
+name: "Terraform apply"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "terragrunt/**"
+      - ".github/workflows/tf_apply.yml"
+
+env:
+  TERRAFORM_VERSION: 1.8.5
+  TERRAGRUNT_VERSION: 0.59.0 
+  AWS_ACCOUNT: 730335533085 
+  AWS_REGION: ca-central-1
+
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+  actions: write
+  checks: write
+  statuses: write
+
+jobs:
+  terragrunt-apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+
+      - name: Setup terraform tools
+        uses: cds-snc/terraform-tools-setup@v1
+
+      - name: Configure aws credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: arn:aws:iam::${{env.AWS_ACCOUNT}}:role/doc_to_html-apply
+          role-session-name: TFApply
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Apply ecr 
+        working-directory: terragrunt/env/production/ecr
+        run: terragrunt apply --terragrunt-non-interactive -auto-approve
