@@ -28,3 +28,18 @@ module "doc_to_html_lambda" {
 
     authorization_type = "NONE"
   }
+
+  resource "aws_lambda_permission" "doc_to_html_invoke_function_url" {
+    statement_id           = "AllowInvokeFunctionUrl"
+    action                 = "lambda:InvokeFunctionUrl"
+    function_name          = module.doc_to_html_lambda.function_name
+    function_url_auth_type = "NONE"
+    principal              = "*"
+  }
+
+  resource "aws_lambda_permission" "doc_to_html_invoke_function" {
+    statement_id  = "AllowInvokeFunction"
+    action        = "lambda:InvokeFunction"
+    function_name = module.doc_to_html_lambda.function_name
+    principal     = "*"
+  }
